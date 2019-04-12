@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
+import Emp from './emp';
 
 class App extends React.Component {
 
@@ -10,9 +12,17 @@ class App extends React.Component {
     this.state = {
       count: 0,
       data: '',
+      emps: [
+        {id: 101, name: 'Paul', salary: 5000},
+        {id: 102, name: 'Sam', salary: 2000},
+        {id: 103, name: 'Sid', salary: 2500},
+        {id: 104, name: 'John', salary: 5000},
+        {id: 105, name: 'Alice', salary: 4000}
+      ],
     };
     this.setNewNumber = this.setNewNumber.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.clearInput = this.clearInput.bind(this);
   }
 
   updateState(e) {
@@ -31,6 +41,13 @@ class App extends React.Component {
     alert("Button clicked");
   }
 
+  clearInput() {
+    this.setState({
+      data: '',
+    });
+    ReactDOM.findDOMNode(this.refs.myText).focus();
+  }
+
   render() {
     return (
       <div>
@@ -44,8 +61,24 @@ class App extends React.Component {
         <button onClick={this.setNewNumber}>Increment by 1</button>
         <br/>
         <br/>
-        <input type="text" value={this.state.data} onChange={this.updateState}/>
+        <input type="text" ref="myText" value={this.state.data} onChange={this.updateState}/>
         <h4>{this.state.data}</h4>
+        <button onClick={this.clearInput}>Clear input</button>
+
+        <h2>Collections</h2>
+        <table style={{width:'500px'}}>
+          <tbody>
+            <tr style={{ backgroundColor:'grey', color:'white'}}>
+              <td>Name</td>
+              <td>Salary</td>
+            </tr>
+            {
+              this.state.emps.map((emp) => {
+                return (<Emp salary ={emp.salary}>{emp.name}</Emp>)
+              })
+            }
+          </tbody>
+        </table>
         <Content/>
       </div>
     );
@@ -63,7 +96,7 @@ App.propTypes = {
 //
  App.defaultProps = {
    name: 'My React App',
-//   propArray: [1, 2, 3, 4, 5],
+   propArray: [1, 2, 3, 4, 5],
 //   propBool: true,
 //   propFunc: function(e) {
 //     return e;
@@ -87,7 +120,6 @@ class Content extends Component {
     return (
       <div>
         <h2>Content</h2>
-        <p>The text</p>
         <img src={logo} className="App-logo" alt="logo" />
       </div>
     );
