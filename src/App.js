@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import Emp from './emp';
+import Home from './home';
+import Login from './login';
 
 class App extends React.Component {
 
@@ -56,42 +59,55 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-      <Header/>
-        <h2>Hello, {this.props.name}</h2>
-        <h2>Value of state: {this.state.count}</h2>
-        <p>{this.props.children}</p>
-        <p>Array: {this.props.propArray}</p>
-        <p></p>
-        <button onClick={this.btnClick}>Click here</button>
-        <button onClick={this.setNewNumber}>Increment by 1</button>
-        <br/>
-        <br/>
-        <input type="text" ref="myText" value={this.state.data} onChange={this.updateState}/>
-        <h4>{this.state.data}</h4>
-        <button onClick={this.clearInput}>Clear input</button>
+      <Router>
+        <div class="navbar">
+          <ul>
+            <Link to={'/'}><li>Home</li></Link>
+            <Link to={'/login'}><li>Login</li></Link>
+          </ul>
+          <hr/>
+          <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route exact path='/login' component={Login}/>
+          </Switch>
+        </div>
+        <div>
+        <Header/>
+          <h2>Hello, {this.props.name}</h2>
+          <h2>Value of state: {this.state.count}</h2>
+          <p>{this.props.children}</p>
+          <p>Array: {this.props.propArray}</p>
+          <p></p>
+          <button onClick={this.btnClick}>Click here</button>
+          <button onClick={this.setNewNumber}>Increment by 1</button>
+          <br/>
+          <br/>
+          <input type="text" ref="myText" value={this.state.data} onChange={this.updateState}/>
+          <h4>{this.state.data}</h4>
+          <button onClick={this.clearInput}>Clear input</button>
 
-        <h2>Collections</h2>
-        <table style={{width:'500px'}}>
-          <tbody>
-            <tr style={{ backgroundColor:'grey', color:'white'}}>
-              <td>Name</td>
-              <td>Salary</td>
-              <td>Actions</td>
-            </tr>
-            {
-              this.state.emps.map((emp, id) => {
-                return (<Emp
-                  salary ={emp.salary}
-                  key={emp.id}
-                  deleteEvent={this.delEmp.bind(this, id)}>
-                  {emp.name}</Emp>)
-              })
-            }
-          </tbody>
-        </table>
-        <Content/>
-      </div>
+          <h2>Collections</h2>
+          <table style={{width:'500px'}}>
+            <tbody>
+              <tr style={{ backgroundColor:'grey', color:'white'}}>
+                <td>Name</td>
+                <td>Salary</td>
+                <td>Actions</td>
+              </tr>
+              {
+                this.state.emps.map((emp, id) => {
+                  return (<Emp
+                    salary ={emp.salary}
+                    key={emp.id}
+                    deleteEvent={this.delEmp.bind(this, id)}>
+                    {emp.name}</Emp>)
+                })
+              }
+            </tbody>
+          </table>
+          <Content/>
+        </div>
+      </Router>
     );
   }
 }
