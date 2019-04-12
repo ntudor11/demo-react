@@ -48,6 +48,12 @@ class App extends React.Component {
     ReactDOM.findDOMNode(this.refs.myText).focus();
   }
 
+  delEmp = (index, e) => {
+    const copyemps = Object.assign([], this.state.emps);
+    copyemps.splice(index, 1);
+    this.setState({emps:copyemps});
+  }
+
   render() {
     return (
       <div>
@@ -71,10 +77,15 @@ class App extends React.Component {
             <tr style={{ backgroundColor:'grey', color:'white'}}>
               <td>Name</td>
               <td>Salary</td>
+              <td>Actions</td>
             </tr>
             {
-              this.state.emps.map((emp) => {
-                return (<Emp salary ={emp.salary}>{emp.name}</Emp>)
+              this.state.emps.map((emp, id) => {
+                return (<Emp
+                  salary ={emp.salary}
+                  key={emp.id}
+                  deleteEvent={this.delEmp.bind(this, id)}>
+                  {emp.name}</Emp>)
               })
             }
           </tbody>
