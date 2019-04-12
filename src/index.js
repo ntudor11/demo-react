@@ -6,7 +6,9 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <div>
-    <App /><hr/>
+    <App name="Tudor" propArray="[1, 3, 5]">Button is here.</App>
+    <hr/>
+    <App name="React" propArray="[1, 42, 15]">Button is also there.</App>
   </div>
     , document.getElementById('root'));
 
