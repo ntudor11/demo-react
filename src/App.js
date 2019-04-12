@@ -5,14 +5,23 @@ import './App.css';
 
 class App extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       count: 0,
+      data: '',
     };
+    this.setNewNumber = this.setNewNumber.bind(this);
+    this.updateState = this.updateState.bind(this);
   }
 
-  btnIncrement() {
+  updateState(e) {
+    this.setState({
+      data: e.target.value
+    });
+  }
+
+  setNewNumber() {
     this.setState({
       count: this.state.count + 1
     });
@@ -32,7 +41,11 @@ class App extends React.Component {
         <p>Array: {this.props.propArray}</p>
         <p></p>
         <button onClick={this.btnClick}>Click here</button>
-        <button onClick={this.btnIncrement.bind(this)}>Increment by 1</button>
+        <button onClick={this.setNewNumber}>Increment by 1</button>
+        <br/>
+        <br/>
+        <input type="text" value={this.state.data} onChange={this.updateState}/>
+        <h4>{this.state.data}</h4>
         <Content/>
       </div>
     );
