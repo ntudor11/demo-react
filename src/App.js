@@ -3,7 +3,20 @@ import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      count: 0,
+    };
+  }
+
+  btnIncrement() {
+    this.setState({
+      count: this.state.count + 1
+    });
+  }
 
   btnClick() {
     alert("Button clicked");
@@ -12,10 +25,15 @@ class App extends Component {
   render() {
     return (
       <div>
+      <Header/>
         <h2>Hello, {this.props.name}</h2>
+        <h2>Value of state: {this.state.count}</h2>
         <p>{this.props.children}</p>
         <p>Array: {this.props.propArray}</p>
+        <p></p>
         <button onClick={this.btnClick}>Click here</button>
+        <button onClick={this.btnIncrement.bind(this)}>Increment by 1</button>
+        <Content/>
       </div>
     );
   }
